@@ -1,7 +1,7 @@
-import StorylineSlide from "@/components/StorylineSlide";
+import { Deck } from "@/components/Deck";
 
 const Index = () => {
-  return <StorylineSlide />;
+  return <Deck />;
 };
 
 export default Index;
