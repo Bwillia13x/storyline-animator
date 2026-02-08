@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Consulting Slide Design System
+   McKinsey/KPMG aesthetic: minimalist, whitespace-heavy, premium motion
+   All colors in HSL format
 */
 
 @layer base {
   :root {
+    /* Core palette */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -38,59 +40,49 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* === CONSULTING SLIDE TOKENS === */
+    
+    /* Slide background - warm off-white */
+    --slide-bg: 36 33% 96%; /* #F7F4EF */
+    
+    /* Primary text - deep navy */
+    --slide-primary: 215 75% 14%; /* #0B1E3B */
+    
+    /* Secondary text - slate charcoal */
+    --slide-secondary: 213 18% 27%; /* #3A4653 */
+    
+    /* Muted text */
+    --slide-muted: 213 12% 45%;
+    
+    /* Borders - cool gray */
+    --slide-border: 216 14% 86%; /* #D5D8DE */
+    
+    /* Card background */
+    --slide-card: 0 0% 100%;
+    
+    /* Badge background */
+    --slide-badge: 210 20% 94%;
+    
+    /* Accent - Teal (default, can be overridden) */
+    --slide-accent: 174 78% 33%; /* #1E8E8A */
+    --slide-accent-glow: 174 78% 33% / 0.15;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Typography scale */
+    --slide-title-size: 2.75rem;
+    --slide-subtitle-size: 1.125rem;
+    --slide-tile-header-size: 1rem;
+    --slide-tile-subline-size: 0.875rem;
+    --slide-footer-size: 0.8125rem;
   }
 }
 
@@ -100,6 +92,105 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Consulting Slide Utilities */
+@layer utilities {
+  .bg-slide {
+    background-color: hsl(var(--slide-bg));
+  }
+
+  .bg-slide-card {
+    background-color: hsl(var(--slide-card));
+  }
+
+  .bg-slide-badge {
+    background-color: hsl(var(--slide-badge));
+  }
+
+  .text-slide-primary {
+    color: hsl(var(--slide-primary));
+  }
+
+  .text-slide-secondary {
+    color: hsl(var(--slide-secondary));
+  }
+
+  .text-slide-muted {
+    color: hsl(var(--slide-muted));
+  }
+
+  .border-slide-border {
+    border-color: hsl(var(--slide-border));
+  }
+
+  /* Accent color (dynamic via CSS variable) */
+  .bg-accent {
+    background-color: hsl(var(--accent-primary, var(--slide-accent)));
+  }
+
+  .text-accent {
+    color: hsl(var(--accent-primary, var(--slide-accent)));
+  }
+
+  .border-accent {
+    border-color: hsl(var(--accent-primary, var(--slide-accent)));
+  }
+
+  /* Typography sizes */
+  .text-slide-title {
+    font-size: var(--slide-title-size);
+    line-height: 1.15;
+  }
+
+  .text-slide-subtitle {
+    font-size: var(--slide-subtitle-size);
+    line-height: 1.5;
+  }
+
+  .text-slide-tile-header {
+    font-size: var(--slide-tile-header-size);
+    line-height: 1.3;
+  }
+
+  .text-slide-tile-subline {
+    font-size: var(--slide-tile-subline-size);
+    line-height: 1.4;
+  }
+
+  .text-slide-footer {
+    font-size: var(--slide-footer-size);
+    line-height: 1.5;
+  }
+
+  /* Shadows */
+  .shadow-tile {
+    box-shadow: 
+      0 1px 2px hsl(var(--slide-primary) / 0.03),
+      0 4px 12px hsl(var(--slide-primary) / 0.04);
+  }
+
+  .shadow-spotlight {
+    box-shadow: 
+      0 4px 16px hsl(var(--accent-glow, var(--slide-accent-glow))),
+      0 8px 32px hsl(var(--slide-primary) / 0.06);
+  }
+
+  /* Paper grain texture */
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+
+  /* Vignette effect */
+  .bg-vignette {
+    background: radial-gradient(
+      ellipse at center,
+      transparent 0%,
+      transparent 60%,
+      hsl(var(--slide-primary) / 0.02) 100%
+    );
   }
 }
