@@ -141,85 +141,147 @@ export function Deck() {
         <div className="text-xs text-slide-muted">{caseData.date}</div>
       </motion.div>
 
-      {/* Slides */}
+      {/* Slides with enhanced transitions */}
       <div className="relative w-full h-full">
         {slides.map((slide, index) => (
-          <slide.Component
+          <motion.div
             key={index}
-            isActive={currentSlide === index}
-            progress={currentSlide === index ? slideProgress : 0}
-          />
+            className="absolute inset-0"
+            initial={false}
+            animate={{
+              opacity: currentSlide === index ? 1 : 0,
+              scale: currentSlide === index ? 1 : 0.98,
+              filter: currentSlide === index ? "blur(0px)" : "blur(4px)",
+            }}
+            transition={{
+              duration: 0.6,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            style={{ pointerEvents: currentSlide === index ? 'auto' : 'none' }}
+          >
+            <slide.Component
+              isActive={currentSlide === index}
+              progress={currentSlide === index ? slideProgress : 0}
+            />
+          </motion.div>
         ))}
       </div>
 
       {/* Navigation Controls */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4">
-        {/* Slide indicators */}
-        <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg border border-slide-border">
+      <motion.div 
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        {/* Slide indicators with glow effect */}
+        <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md rounded-full px-4 py-2.5 shadow-lg border border-slide-border/50">
           {slides.map((slide, index) => (
-            <button
+            <motion.button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`group relative w-8 h-2 rounded-full transition-all duration-300 ${
+              className={`relative w-10 h-2.5 rounded-full transition-all duration-300 overflow-hidden ${
                 index === currentSlide 
-                  ? 'bg-accent' 
+                  ? 'bg-accent/20' 
                   : index < currentSlide 
-                    ? 'bg-accent/40' 
+                    ? 'bg-accent/50' 
                     : 'bg-slide-border hover:bg-slide-muted/50'
               }`}
               title={slide.title}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
+              {/* Progress fill for current slide */}
               {index === currentSlide && (
                 <motion.div
-                  className="absolute inset-0 rounded-full bg-accent/30"
-                  style={{ 
-                    width: `${slideProgress * 100}%`,
-                    backgroundColor: 'hsl(var(--slide-accent))'
-                  }}
-                  initial={false}
+                  className="absolute inset-0 rounded-full bg-accent"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: slideProgress }}
+                  style={{ transformOrigin: 'left' }}
+                  transition={{ duration: 0.1 }}
                 />
               )}
-            </button>
+              
+              {/* Glow effect for current */}
+              {index === currentSlide && (
+                <motion.div
+                  className="absolute -inset-1 rounded-full bg-accent/30 blur-sm"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+              )}
+              
+              {/* Completed checkmark dot */}
+              {index < currentSlide && (
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                </motion.div>
+              )}
+            </motion.button>
           ))}
         </div>
 
-        {/* Playback controls */}
-        <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1.5 shadow-lg border border-slide-border">
-          <button
+        {/* Playback controls with hover effects */}
+        <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-md rounded-full px-3 py-2 shadow-lg border border-slide-border/50">
+          <motion.button
             onClick={prevSlide}
             disabled={currentSlide === 0}
-            className="p-1.5 rounded-full hover:bg-slide-badge disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="p-2 rounded-full hover:bg-accent/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <ChevronLeft className="w-4 h-4 text-slide-secondary" />
-          </button>
+          </motion.button>
           
-          <button
+          <motion.button
             onClick={togglePlay}
-            className="p-1.5 rounded-full hover:bg-slide-badge transition-colors"
+            className="p-2 rounded-full hover:bg-accent/10 transition-colors relative"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
+            {/* Pulsing ring when playing */}
+            {isPlaying && (
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-accent/50"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            )}
             {isPlaying ? (
-              <Pause className="w-4 h-4 text-slide-secondary" />
+              <Pause className="w-4 h-4 text-accent" />
             ) : (
               <Play className="w-4 h-4 text-slide-secondary" />
             )}
-          </button>
+          </motion.button>
 
-          <button
+          <motion.button
             onClick={nextSlide}
             disabled={currentSlide === TOTAL_SLIDES - 1}
-            className="p-1.5 rounded-full hover:bg-slide-badge disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="p-2 rounded-full hover:bg-accent/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <ChevronRight className="w-4 h-4 text-slide-secondary" />
-          </button>
+          </motion.button>
 
-          <button
+          <div className="w-px h-5 bg-slide-border mx-1" />
+
+          <motion.button
             onClick={restart}
-            className="p-1.5 rounded-full hover:bg-slide-badge transition-colors"
+            className="p-2 rounded-full hover:bg-accent/10 transition-colors"
+            whileHover={{ scale: 1.1, rotate: -180 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.3 }}
           >
             <RotateCcw className="w-4 h-4 text-slide-secondary" />
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Slide number */}
       <div className="absolute bottom-6 right-6 z-20">
