@@ -10,6 +10,7 @@ import { Roadmap } from "@/slides/Roadmap";
 import { BusinessCase } from "@/slides/BusinessCase";
 import { RisksMitigations } from "@/slides/RisksMitigations";
 import { Next30Days } from "@/slides/Next30Days";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { ChevronLeft, ChevronRight, Play, Pause, RotateCcw } from "lucide-react";
 
 const SLIDE_DURATION = 9; // seconds per slide
@@ -120,6 +121,9 @@ export function Deck() {
 
   return (
     <div className="relative w-full h-screen bg-slide overflow-hidden">
+      {/* Animated background */}
+      <AnimatedBackground />
+      
       {/* Paper grain texture */}
       <div className="absolute inset-0 bg-grain opacity-[0.04] pointer-events-none" />
       
