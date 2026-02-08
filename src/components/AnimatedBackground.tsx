@@ -26,10 +26,10 @@ const FloatingOrb = ({
       filter: 'blur(60px)',
     }}
     animate={{
-      x: [0, 30, -20, 10, 0],
-      y: [0, -40, 20, -30, 0],
-      scale: [1, 1.1, 0.95, 1.05, 1],
-      opacity: [0.3, 0.5, 0.35, 0.45, 0.3],
+      x: [0, 50, -30, 20, 0],
+      y: [0, -60, 30, -40, 0],
+      scale: [1, 1.2, 0.9, 1.1, 1],
+      opacity: [0.6, 0.8, 0.5, 0.7, 0.6],
     }}
     transition={{
       duration,
@@ -58,11 +58,11 @@ const GridLine = ({
     style={{
       [orientation === 'horizontal' ? 'top' : 'left']: position,
       background: orientation === 'horizontal'
-        ? 'linear-gradient(90deg, transparent, hsl(var(--slide-border) / 0.3), transparent)'
-        : 'linear-gradient(180deg, transparent, hsl(var(--slide-border) / 0.3), transparent)',
+        ? 'linear-gradient(90deg, transparent, hsl(var(--slide-accent) / 0.25), transparent)'
+        : 'linear-gradient(180deg, transparent, hsl(var(--slide-accent) / 0.25), transparent)',
     }}
     initial={{ opacity: 0 }}
-    animate={{ opacity: [0, 0.5, 0] }}
+    animate={{ opacity: [0, 0.7, 0] }}
     transition={{
       duration: 8,
       delay,
@@ -86,11 +86,11 @@ const FloatingDot = ({
     style={{
       left: x,
       top: y,
-      backgroundColor: 'hsl(var(--slide-accent) / 0.4)',
+      backgroundColor: 'hsl(var(--slide-accent) / 0.7)',
     }}
     animate={{
-      y: [0, -100, -200],
-      opacity: [0, 0.6, 0],
+      y: [0, -150, -300],
+      opacity: [0, 0.9, 0],
       scale: [0.5, 1, 0.5],
     }}
     transition={{
@@ -109,34 +109,34 @@ export function AnimatedBackground() {
       <FloatingOrb
         delay={0}
         duration={20}
-        size={400}
-        x="10%"
-        y="20%"
-        color="hsl(var(--slide-accent) / 0.08)"
+        size={500}
+        x="5%"
+        y="15%"
+        color="hsl(var(--slide-accent) / 0.2)"
       />
       <FloatingOrb
         delay={3}
         duration={25}
-        size={350}
-        x="70%"
-        y="60%"
-        color="hsl(var(--slide-accent) / 0.06)"
+        size={450}
+        x="65%"
+        y="55%"
+        color="hsl(var(--slide-accent) / 0.15)"
       />
       <FloatingOrb
         delay={6}
         duration={22}
-        size={300}
-        x="50%"
-        y="10%"
-        color="hsl(215 75% 14% / 0.04)"
+        size={400}
+        x="45%"
+        y="5%"
+        color="hsl(215 75% 40% / 0.12)"
       />
       <FloatingOrb
         delay={9}
         duration={28}
-        size={250}
-        x="85%"
-        y="30%"
-        color="hsl(var(--slide-accent) / 0.05)"
+        size={350}
+        x="80%"
+        y="25%"
+        color="hsl(var(--slide-accent) / 0.18)"
       />
       
       {/* Subtle grid lines that pulse */}
@@ -157,13 +157,13 @@ export function AnimatedBackground() {
       
       {/* Corner accent gradients */}
       <motion.div
-        className="absolute -top-32 -right-32 w-96 h-96 rounded-full pointer-events-none"
+        className="absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, hsl(var(--slide-accent) / 0.06) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, hsl(var(--slide-accent) / 0.2) 0%, hsl(var(--slide-accent) / 0.05) 50%, transparent 70%)',
         }}
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.5, 0.8, 0.5],
+          scale: [1, 1.3, 1],
+          opacity: [0.6, 1, 0.6],
         }}
         transition={{
           duration: 15,
@@ -172,13 +172,13 @@ export function AnimatedBackground() {
         }}
       />
       <motion.div
-        className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
+        className="absolute -bottom-20 -left-20 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, hsl(var(--slide-accent) / 0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, hsl(var(--slide-accent) / 0.15) 0%, hsl(var(--slide-accent) / 0.04) 50%, transparent 70%)',
         }}
         animate={{
           scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.6, 0.3],
+          opacity: [0.5, 0.9, 0.5],
         }}
         transition={{
           duration: 18,
@@ -191,14 +191,14 @@ export function AnimatedBackground() {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'linear-gradient(105deg, transparent 40%, hsl(var(--slide-accent) / 0.03) 50%, transparent 60%)',
+          background: 'linear-gradient(105deg, transparent 30%, hsl(var(--slide-accent) / 0.1) 50%, transparent 70%)',
           backgroundSize: '200% 100%',
         }}
         animate={{
           backgroundPosition: ['200% 0%', '-200% 0%'],
         }}
         transition={{
-          duration: 15,
+          duration: 12,
           repeat: Infinity,
           ease: "linear",
         }}
